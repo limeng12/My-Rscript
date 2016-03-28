@@ -1,0 +1,53 @@
+log(0.05)
+log10(0.05)
+help(readLines)
+dev.off()
+pdf("dfdf")
+dev.off()
+a<-c(1,2,3,4)
+b<-c("a")
+paste(a,b)
+paste0(a,b)
+?jpeg
+help(sin)
+ll
+ls()
+source("https://bioconductor.org/biocLite.R")#
+biocLite("GenomicRanges")
+ls()
+nn
+ls()
+ll
+library(GenomicRanges)#
+#
+dataAnno<-read.table("../anno/Homo_sapiens.GRCh37.75.gtf",header=F,as.is=T,sep="\t");#
+colnames(dataAnno)<-c("chr","function","class","start","end","score","strand","id","attr");#
+dataAnnoRange<-with(dataAnno,GRanges(seqnames=chr,ranges=IRanges(start=start,end=end),strand=strand));#
+#
+files<-list.files("../clipbigBed/");#
+filesName<-sapply(strsplit(files,"\\."),"[",1);#
+#
+clipRangesList<-GRangeList();
+getwd()
+setwd("/Users/mengli/Documents/projects/RBP_network/r")
+/Users/mengli/Documents/projects/RBP_network/r
+$#
+library(GenomicRanges)#
+#
+dataAnno<-read.table("../anno/Homo_sapiens.GRCh37.75.gtf",header=F,as.is=T,sep="\t");#
+colnames(dataAnno)<-c("chr","function","class","start","end","score","strand","id","attr");#
+dataAnnoRange<-with(dataAnno,GRanges(seqnames=chr,ranges=IRanges(start=start,end=end),strand=strand));#
+#
+files<-list.files("../clipbigBed/");#
+filesName<-sapply(strsplit(files,"\\."),"[",1);#
+#
+clipRangesList<-GRangeList();#
+for(i in filesName){#
+  oneClip<-read.table(paste0("../clipbigBed/",i,".begBed.bed"),header=F,as.is=T,sep="\t");#
+  colnames(oneClip)<-c("chr","function","class","start","end","score","strand","id","attr");#
+  oneClipRange<-with(oneClip,GRanges(seqnames=chr,ranges=IRanges(start=start,end=end),strand=strand));#
+  clipRangesList[[i]]<-oneClipRange;#
+#
+}#
+#
+mtch<-findOverlaps(dataAnnoRange,clipRangesList);
